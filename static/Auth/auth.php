@@ -12,17 +12,19 @@
         $fh = fopen('passwords.txt','r');
 
         while ($line = fgets($fh)) {
-        $pair = explode(';',$line);
+        $pair = explode('|',$line);
             $loc_name = $pair[0];
             $loc_pass = $pair[1];
+            echo("{$loc_name} - {$loc_pass}");
+            echo("{$username} - {$password}");
             if($loc_name == $username && $loc_pass == $password)
                 $is_user_exist = true;
         }
         fclose($fh);
         if($is_user_exist)
-            $echo("access granted");
+            echo("access granted");
         else
-            $echo("access denied");
+            echo("access denied");
     }
 
     if ( isset( $_POST['register'] ) ) 
@@ -35,7 +37,7 @@
         $fh = fopen('passwords.txt','r');
 
         while ($line = fgets($fh)) {
-        $pair = explode(';',$line);
+        $pair = explode('|',$line);
             $loc_name = $pair[0];
             $loc_pass = $pair[1];
             if($loc_name == $username && $loc_pass == $password)
@@ -43,11 +45,11 @@
         }
         
         if($is_user_exist)
-            $echo("user already exist");
+            echo("user already exist");
         else
         {
-            $echo("registration was successful");
-            file_put_contents("passwords.txt",$username+"|"+$password+"\n");
+            echo("registration was successful");
+            file_put_contents("passwords.txt","{$username}|{$password}\n");
         }
         fclose($fh);
 

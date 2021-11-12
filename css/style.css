@@ -190,10 +190,93 @@ p {
     margin-bottom: 30px;
 }
 
-@media (max-width: 450px) {
+.register {
+    position: absolute;
+    right: 200px;
+}
+
+.login {
+    position: absolute;
+    right: 100px;
+    border-left: 1px rgb(100, 99, 104) solid;
+    padding-left: 25px;
+}
+
+.authContainer {
+    height: 200px;
+    width: 300px;
+    border: rgb(255, 122, 189) 2px solid;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 14%;
+    margin-bottom: 14%;
+    background: linear-gradient( rgb(132, 255, 255) ,rgb(221, 168, 223),rgb(132, 255, 255));
+
+}
+
+.authForm {
+    text-align: center;
+}
+
+.authForm > input {
+    margin-right: 0;
+    margin-top: 10px;
+    margin-bottom: 0;
+    width: 200px;
+    height: 30px;
+}
+
+.authForm > input[type="submit"] {
+    width: 80px;
+    height: 20px;
+    
+}
+
+.authForm >  button {
+    width: 80px;
+    height: 20px;
+    margin-left: 35px;
+}
+
+.authForm > label {
+    margin-left: 35px;
+    margin-right: 35px;
+    font-size: 25px;
+}
+
+@media (max-width: 600px) {
 
     main {
         flex-direction: column;
     }
 
+    .nav {
+        width: auto;
+        height: 100%;
+        margin-left: auto;
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login {
+        right: 10;
+        bottom: 0;
+        border: 0px;
+    }
+
+    .register {
+        right: 10;
+        bottom: 30;
+    }
+
 }
+
+

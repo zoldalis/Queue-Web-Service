@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <div class="wrapper">
         <body>
@@ -20,7 +20,8 @@
                         <li><a href="MainPage/operators/overloaded_operators.php">> Overloaded Operators</a></li>
                     </ul>
 
-                    <ul><a href="MainPage/form.php"> Pass the author form</a> </ul>
+                    <ul class="register"><a href="MainPage/form.php"> Register</a> </ul>
+                    <ul class="login"><a href="/static/Auth/login.php"> Login</a> </ul>
                 </ul>
             </div>
             <main>
