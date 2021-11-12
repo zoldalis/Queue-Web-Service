@@ -5,7 +5,8 @@
     { 
 
         $username =     filter_var($_POST['loginText'],FILTER_SANITIZE_STRING);
-        $password =    password_hash($_POST['password'], PASSWORD_DEFAULT); 
+        $password =    $_POST['password']; 
+        $hashed_password =  password_hash($_POST['password'], PASSWORD_DEFAULT); 
     
         $is_user_exist = false;
         
@@ -14,10 +15,8 @@
         while ($line = fgets($fh)) {
         $pair = explode('|',$line);
             $loc_name = $pair[0];
-            $loc_pass = $pair[1];
-            echo("{$loc_name} - {$loc_pass}");
-            echo("{$username} - {$password}");
-            if($loc_name == $username && $loc_pass == $password)
+            $loc_pass = substr($pair[1], 0, -1);
+            if($username == $loc_name && password_verify($password,$loc_pass))
                 $is_user_exist = true;
         }
         fclose($fh);
@@ -30,8 +29,8 @@
     if ( isset( $_POST['register'] ) ) 
     {
         $username =     filter_var($_POST['loginText'],FILTER_SANITIZE_STRING);
-        $password =    password_hash($_POST['password'], PASSWORD_DEFAULT);
-
+        $password =    $_POST['password'];
+        $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $is_user_exist = false;
         
         $fh = fopen('passwords.txt','r');
@@ -40,7 +39,7 @@
         $pair = explode('|',$line);
             $loc_name = $pair[0];
             $loc_pass = $pair[1];
-            if($loc_name == $username && $loc_pass == $password)
+            if($loc_name == $username)
                 $is_user_exist = true;
         }
         
@@ -49,11 +48,9 @@
         else
         {
             echo("registration was successful");
-            file_put_contents("passwords.txt","{$username}|{$password}\n");
+            file_put_contents("passwords.txt","{$username}|{$hashed_password}\n", FILE_APPEND | LOCK_EX);
         }
         fclose($fh);
-
-
     }
 
     ?>
