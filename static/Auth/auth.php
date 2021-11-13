@@ -1,4 +1,3 @@
-
 <?php
     
     if ( isset( $_POST['login'] ) ) 
@@ -21,9 +20,15 @@
         }
         fclose($fh);
         if($is_user_exist)
-            echo("access granted");
+        {
+            header("Location: /static/MainPage.php?answer=1&login={$username}");
+            Exit();
+        }
         else
-            echo("access denied");
+        {
+            header("Location: /static/Auth/login.php?answer=0");
+            Exit();
+        }
     }
 
     if ( isset( $_POST['register'] ) ) 
@@ -44,13 +49,14 @@
         }
         
         if($is_user_exist)
-            echo("user already exist");
+            header("Location: /static/Auth/login.php?answer=0");
         else
         {
-            echo("registration was successful");
             file_put_contents("passwords.txt","{$username}|{$hashed_password}\n", FILE_APPEND | LOCK_EX);
+            header("Location: /static/MainPage.php?answer=1&login={$username}");
         }
         fclose($fh);
+        Exit();
     }
 
     ?>
