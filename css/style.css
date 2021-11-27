@@ -244,6 +244,10 @@ p {
     font-size: 25px;
 }
 
+.listOfRandoms {
+    border: 1px solid rgb(162, 66, 240);
+}
+
 @media (max-width: 600px) {
 
     main {

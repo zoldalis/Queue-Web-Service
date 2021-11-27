@@ -1,5 +1,7 @@
 <?php
     
+    include 'DBCore.php';
+
     if ( isset( $_POST['login'] ) ) 
     { 
 
@@ -38,21 +40,24 @@
         $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $is_user_exist = false;
         
-        $fh = fopen('passwords.txt','r');
-
-        while ($line = fgets($fh)) {
-        $pair = explode('|',$line);
-            $loc_name = $pair[0];
-            $loc_pass = $pair[1];
-            if($loc_name == $username)
-                $is_user_exist = true;
-        }
+        $passQuery = "SELECT * FROM authdata WHERE (authdata.login == {$username})";
+        $result = null;
+        if($dbConnect)
+            $result = mysqli_query($dbConnect,$passQuery);
+        $hash = "";
+        foreach($result as &$row)
+            $hash = $row['pass'];
         
+        $is_user_exist = $hash != "";
+            
         if($is_user_exist)
             header("Location: /static/Auth/login.php?answer=0");
+
         else
         {
-            file_put_contents("passwords.txt","{$username}|{$hashed_password}\n", FILE_APPEND | LOCK_EX);
+            $addQuery = "INSERT INTO authdata (login,pass,name,email,last_date_auth) VALUES ( {$username} , {$hashed_password} ,'name' ,'mail', 'date')";
+            if($dbConnect)
+                mysqli_query($dbConnect,$addQuery);
             header("Location: /static/MainPage.php?answer=1&login={$username}");
         }
         fclose($fh);
