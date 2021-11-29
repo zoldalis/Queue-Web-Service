@@ -38,10 +38,8 @@
             <form action="../Auth/register.php" method="get">
                 <fieldset>
                     <legend class="h">Contact Details</legend>
-                    <span class="form_imp"> <label for="name">Name</label>      <input name="name" type="text"    placeholder="Sample text" id="name" required pattern="^[А-Яа-яЁё\s]{2,} [А-Яа-яЁё\s]{2,}"></span>
-                    <span class="form_imp"> <label for="tel">Telephone</label>  <input name="tel" type="tel"      placeholder="89955566893" id="tel" required pattern="[0-9]{11}"></span>
-                    <span class="form_imp"> <label for="mail">Email</label>     <input name="email" type="email"  placeholder="sample@sample.ru" id="mail" required></span>
-                    <span class="form_imp"> <label for="web">Web site</label>   <input name="url" type="url"      placeholder="www.sample.ru" id="web" required></span>
+                    <span class="form_imp"> <label for="name">Name</label>      <input name="name" type="text"    placeholder="Sample text" id="name" required pattern="^[A-Za-z]{2,} [A-Za-z\s]{2,}"></span>
+                    <span class="form_imp"> <label for="mail">Email</label>     <input name="email" type="email"  placeholder="sample@sample.ru" id="mail" ></span>
                 </fieldset>
 
                 <fieldset>

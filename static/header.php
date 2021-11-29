@@ -17,13 +17,16 @@
                         <a href="/static/Calc/calc.php"> Calculator </a>
                     </ul>
                     <?php
-                    if(isset($_GET["answer"]) && $_GET["answer"] == 1 && isset($_GET["login"]))
+                    session_start();
+                    if(isset($_SESSION['login']))
                     {
-                        echo("<ul class='register'>{$_GET['login']}</ul>");
-                        echo("<ul class='login'><a href='/static/MainPage.php?answer=0'>Logout</a></ul>");
-                    }
+                        $login = $_SESSION['login'];
+                        echo("<ul class='register'>{$login}</ul>");
+                        echo("<ul class='login'><a href='/static/Auth/logout.php'> Logout </a></ul>");
+                        
+                    } 
                     else
-                        echo("<ul class='register'><a href='MainPage/form.php'> Register</a> </ul>
+                        echo("<ul class='register'><a href='/static/Auth/register.php'> Register </a> </ul>
                             <ul class='login'><a href='/static/Auth/login.php'> Login</a> </ul>");
                     ?>
                 </ul>

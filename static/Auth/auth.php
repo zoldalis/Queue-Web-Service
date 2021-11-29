@@ -7,58 +7,82 @@
 
         $username =     filter_var($_POST['loginText'],FILTER_SANITIZE_STRING);
         $password =    $_POST['password']; 
-        $hashed_password =  password_hash($_POST['password'], PASSWORD_DEFAULT); 
+        //$hashed_password =  password_hash($_POST['password'], PASSWORD_DEFAULT); 
     
         $is_user_exist = false;
         
-        $fh = fopen('passwords.txt','r');
-
-        while ($line = fgets($fh)) {
-        $pair = explode('|',$line);
-            $loc_name = $pair[0];
-            $loc_pass = substr($pair[1], 0, -1);
-            if($username == $loc_name && password_verify($password,$loc_pass))
-                $is_user_exist = true;
+        $passQuery = "SELECT * FROM guidebook.authdata WHERE (authdata.login LIKE '{$username}')";
+        $result = mysqli_query($dbConnect,$passQuery);
+        
+        //foreach($result as &$row)
+        //{
+        //    $hash = $row['pass'];
+        //    $is_user_exist = password_verify($password,$hash);    
+        //}
+        
+        while ($row = mysqli_fetch_array($result)) {
+            $hash = $row['pass'];
+            $is_user_exist = password_verify($password,$hash);
         }
-        fclose($fh);
+
         if($is_user_exist)
         {
-            header("Location: /static/MainPage.php?answer=1&login={$username}");
+            session_start();
+            $_SESSION['login'] = $username;
+            header("Location: /static/MainPage.php");
             Exit();
         }
         else
         {
-            header("Location: /static/Auth/login.php?answer=0");
+            header("Location: /static/Auth/login.php?answer_val=0&answer_text='Wrong input data.'");
             Exit();
         }
     }
 
     if ( isset( $_POST['register'] ) ) 
     {
+        $name = filter_var($_POST['name'],FILTER_SANITIZE_STRING);
+        $mail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
         $username =     filter_var($_POST['loginText'],FILTER_SANITIZE_STRING);
         $password =    $_POST['password'];
         $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $is_user_exist = false;
         
         $passQuery = "SELECT * FROM authdata WHERE (authdata.login == {$username})";
-        $result = null;
-        if($dbConnect)
-            $result = mysqli_query($dbConnect,$passQuery);
+        $result = mysqli_query($dbConnect,$passQuery);
         $hash = "";
+        //if(!$result)
+        //{
+        //    header("Location: /static/Auth/register.php?answer_val=0&answer_text='Something went wrong with getting authdata, try again later.'");
+        //    Exit();
+        //}
+        
         foreach($result as &$row)
             $hash = $row['pass'];
         
         $is_user_exist = $hash != "";
             
         if($is_user_exist)
-            header("Location: /static/Auth/login.php?answer=0");
-
+        {
+            header("Location: /static/Auth/register.php?answer_val=0&answer_text='That login already exist.'");
+            Exit();
+        }
         else
         {
-            $addQuery = "INSERT INTO authdata (login,pass,name,email,last_date_auth) VALUES ( {$username} , {$hashed_password} ,'name' ,'mail', 'date')";
-            if($dbConnect)
-                mysqli_query($dbConnect,$addQuery);
-            header("Location: /static/MainPage.php?answer=1&login={$username}");
+            $date = date('Y-m-d H:i:s');
+            
+            $addQuery = "INSERT INTO guidebook.authdata
+            (login, pass, name, email, last_date_auth) VALUES ( '{$username}' , '{$hashed_password}' ,'{$name}' ,'{$mail}', '{$date}');";
+            $result = mysqli_query($dbConnect,$addQuery);
+            if($result)
+            {
+                session_start();
+                $_SESSION['login'] = $username;
+                header("Location: /static/MainPage.php");
+                Exit();
+            }
+            header("Location: /static/Auth/register.php?answer_val=0&answer_text='Something went wrong, try again later.'");
+            Exit();
         }
         fclose($fh);
         Exit();
