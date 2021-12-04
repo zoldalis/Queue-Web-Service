@@ -1,12 +1,13 @@
 <?php
     
-    include 'DBCore.php';
+    require_once 'DBCore.php';
 
     if ( isset( $_POST['login'] ) ) 
     { 
 
         $username =     filter_var($_POST['loginText'],FILTER_SANITIZE_STRING);
         $password =    $_POST['password']; 
+        
         //$hashed_password =  password_hash($_POST['password'], PASSWORD_DEFAULT); 
     
         $is_user_exist = false;
@@ -19,7 +20,6 @@
         //    $hash = $row['pass'];
         //    $is_user_exist = password_verify($password,$hash);    
         //}
-        
         while ($row = mysqli_fetch_array($result)) {
             $hash = $row['pass'];
             $is_user_exist = password_verify($password,$hash);

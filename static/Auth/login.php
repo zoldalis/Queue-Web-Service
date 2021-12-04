@@ -19,6 +19,8 @@
                     <input type="password" name="password">
                     <br>
                     <input type="submit" name="login" value="Login"> <button> <a href="/static/MainPage.php">Back</a></button>
+                    <br>
+                    <a href="/static/Auth/passrestoring.php">Forgot the password</a>
                 </form>
             </div>
         </body>
