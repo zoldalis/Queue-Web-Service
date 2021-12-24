@@ -1,6 +1,6 @@
 <?php
-    
     require_once 'DBCore.php';
+    $dbConnection = new dbConnection("localhost","admin","1234","guidebook");
 
     if ( isset( $_POST['login'] ) ) 
     { 
@@ -12,8 +12,8 @@
     
         $is_user_exist = false;
         
-        $passQuery = "SELECT * FROM guidebook.authdata WHERE (authdata.login LIKE '{$username}')";
-        $result = mysqli_query($dbConnect,$passQuery);
+        //$passQuery = "SELECT * FROM guidebook.authdata WHERE (authdata.login LIKE '{$username}')";
+        $result = $dbConnection->select("*","guidebook","authdata","(authdata.login LIKE '{$username}')");
         
         //foreach($result as &$row)
         //{
@@ -48,8 +48,8 @@
         $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $is_user_exist = false;
         
-        $passQuery = "SELECT * FROM authdata WHERE (authdata.login == {$username})";
-        $result = mysqli_query($dbConnect,$passQuery);
+        //$passQuery = "SELECT * FROM authdata WHERE (authdata.login == {$username})";
+        $result = $dbConnection->select("*","guidebook","authdata","(authdata.login LIKE '{$username}')");
         $hash = "";
         //if(!$result)
         //{
@@ -73,7 +73,7 @@
             
             $addQuery = "INSERT INTO guidebook.authdata
             (login, pass, name, email, last_date_auth) VALUES ( '{$username}' , '{$hashed_password}' ,'{$name}' ,'{$mail}', '{$date}');";
-            $result = mysqli_query($dbConnect,$addQuery);
+            $result = $dbConnection->query($addQuery);
             if($result)
             {
                 session_start();
@@ -84,7 +84,6 @@
             header("Location: /static/Auth/register.php?answer_val=0&answer_text='Something went wrong, try again later.'");
             Exit();
         }
-        fclose($fh);
         Exit();
     }
 

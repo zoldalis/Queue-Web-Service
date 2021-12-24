@@ -244,6 +244,11 @@ p {
     font-size: 25px;
 }
 
+.postCreation {
+    display: flex;
+    flex-direction: row;
+}
+
 .listOfRandoms {
     border: 1px solid rgb(162, 66, 240);
 }

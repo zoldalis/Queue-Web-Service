@@ -7,9 +7,9 @@ class dbConnection
         $this->_user = $user;
         $this->_password = $password;
         $this->_database = $database;
-        $this->_dbConnect = mysqli_connect("localhost","admin","1234","guidebook");
+        $this->_dbConnect = mysqli_connect($host,$user,$password,$database);
         if($this->_dbConnect)
-            mysqli_set_charset($this->dbConnect,"utf8");
+            mysqli_set_charset($this->_dbConnect,"utf8");
         else
             $this->connectionErrorHandling();
     }
@@ -39,7 +39,7 @@ class dbConnection
         return $this->select("*",$database,$tableName);
     }
 
-    private function query(string $query)
+    public function query(string $query)
     {
         return $this->isConnectionSuccessful() ? mysqli_query($this->_dbConnect,$query) : assert(false);
     }

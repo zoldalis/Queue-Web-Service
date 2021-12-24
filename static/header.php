@@ -5,7 +5,7 @@
     
 <div class="nav">
                 <ul>
-                    <ul><a class="red">Main Page</a></ul>
+                    <ul><a class="red" href="/static/NewsPage.php">Main Page</a></ul>
 
                     <ul><a href="MainPage/functions.php">Functions</a>
                         <li><a href="MainPage/functions/static_functions.php">> Static Functions</a></li>
@@ -14,7 +14,7 @@
                         <li><a href="MainPage/operators/overloaded_operators.php">> Overloaded Operators</a></li>
                     </ul>
                     <ul>
-                        <a href="/static/Calc/calc.php"> Calculator </a>
+                        <a href="/static/NewsPage.php"> News </a>
                     </ul>
                     <?php
                     session_start();
