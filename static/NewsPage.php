@@ -17,10 +17,23 @@
             }
             ?>
             
-            <main>
-                <p class="TextContent">
-                <b>C++ 20 comes OUT!</b> 
-                </p>
+            <main class="Posts">
+                <?php 
+                require_once '/dev/WebProject/static/News/NewsDB.php';
+                $newsDBManager = new NewsDBManager();
+                $news = $newsDBManager->getAllNews();
+                while ($row = mysqli_fetch_array($news)) 
+                {
+                    ?>
+                    <div class="Post">
+                    <p><?php echo$row['Name'] ?></p>
+                    <p><?php echo$row['Small_description'] ?></p>
+                    <p><?php echo$row['Full_description'] ?></p>
+                    </div>
+                    <?php
+                }
+                ?>
+                
             </main>
 
             <footer>

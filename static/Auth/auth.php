@@ -1,6 +1,6 @@
 <?php
     require_once 'DBCore.php';
-    $dbConnection = new dbConnection("localhost","admin","1234","guidebook");
+    $dbConnection = new dbConnection("localhost","root","1234","guidebook");
 
     if ( isset( $_POST['login'] ) ) 
     { 
